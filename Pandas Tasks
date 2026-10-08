@@ -1,0 +1,1237 @@
+# Pandas
+
+# Pandas DataFrame Core Operations
+
+Pandas is a Python library used for **working with structured and tabular data**.
+
+It is very useful in:
+
+- Data Science
+- Machine Learning
+- Data Analysis
+- Artificial Intelligence
+- Data Cleaning
+
+The main data structure of Pandas is called a **DataFrame**.
+
+A DataFrame stores data in the form of:
+
+```
+Rows + Columns
+```
+
+For example:
+
+```
+      Name    Age    Marks
+0     Ali     20      80
+1     Sara    21      90
+2     Ahmed   19      75
+```
+
+We can imagine a DataFrame like an **Excel table**.
+
+---
+
+# 1. Import Pandas
+
+First, we need to import Pandas.
+
+```python
+import pandas as pd
+```
+
+`pd` is just a short name for Pandas.
+
+After importing it, we can use Pandas functions like:
+
+```python
+pd.DataFrame()
+pd.read_csv()
+pd.concat()
+pd.merge()
+```
+
+---
+
+# 2. Creating a DataFrame
+
+A DataFrame stores data in **rows and columns**.
+
+We can create a DataFrame using a Python dictionary.
+
+```python
+import pandas as pd
+
+data = {
+    "Name": ["Ali", "Sara", "Ahmed"],
+    "Age": [20, 21, 19],
+    "Marks": [80, 90, 75]
+}
+
+df = pd.DataFrame(data)
+
+print(df)
+```
+
+Output:
+
+```
+    Name  Age  Marks
+0    Ali   20     80
+1   Sara   21     90
+2  Ahmed   19     75
+```
+
+Here:
+
+```
+Name, Age, Marks → Columns
+
+Ali, Sara, Ahmed → Data
+
+0, 1, 2 → Index
+```
+
+A DataFrame is basically a **table inside Python**.
+
+---
+
+# 3. Reading a Dataset
+
+Most of the time, we do not manually create large DataFrames.
+
+We load data from files.
+
+For example, suppose we have:
+
+```
+students.csv
+```
+
+We can read it using:
+
+```python
+df = pd.read_csv("students.csv")
+
+print(df)
+```
+
+To read an Excel file:
+
+```python
+df = pd.read_excel("students.xlsx")
+```
+
+The data from the file will be converted into a Pandas DataFrame.
+
+The pattern is:
+
+```
+CSV / Excel File
+       ↓
+     Pandas
+       ↓
+   DataFrame
+```
+
+---
+
+# 4. Viewing Data
+
+Large datasets can contain thousands of rows.
+
+We normally do not print the complete dataset.
+
+## head()
+
+`head()` displays the first 5 rows.
+
+```python
+print(df.head())
+```
+
+To display the first 3 rows:
+
+```python
+print(df.head(3))
+```
+
+---
+
+## tail()
+
+`tail()` displays the last 5 rows.
+
+```python
+print(df.tail())
+```
+
+To display the last 2 rows:
+
+```python
+print(df.tail(2))
+```
+
+So:
+
+```
+head() → First rows
+
+tail() → Last rows
+```
+
+---
+
+# 5. Shape and Basic Properties
+
+Suppose:
+
+```python
+data = {
+    "Name": ["Ali", "Sara", "Ahmed"],
+    "Age": [20, 21, 19],
+    "Marks": [80, 90, 75]
+}
+
+df = pd.DataFrame(data)
+```
+
+## shape
+
+`shape` tells us the number of rows and columns.
+
+```python
+print(df.shape)
+```
+
+Output:
+
+```
+(3, 3)
+```
+
+This means:
+
+```
+3 rows
+3 columns
+```
+
+---
+
+## columns
+
+`columns` tells us the column names.
+
+```python
+print(df.columns)
+```
+
+Example output:
+
+```
+Index(['Name', 'Age', 'Marks'], dtype='object')
+```
+
+---
+
+## dtypes
+
+`dtypes` tells us the data type of each column.
+
+```python
+print(df.dtypes)
+```
+
+Example output:
+
+```
+Name     object
+Age       int64
+Marks     int64
+```
+
+---
+
+# 6. DataFrame Information
+
+`info()` gives us important information about the DataFrame.
+
+```python
+df.info()
+```
+
+It tells us:
+
+```
+Number of rows
+Number of columns
+Column names
+Data types
+Missing values
+Memory usage
+```
+
+`info()` is very useful when we start working with a new dataset.
+
+---
+
+# 7. Statistical Summary
+
+`describe()` gives us a statistical summary of numerical columns.
+
+```python
+print(df.describe())
+```
+
+It can show:
+
+```
+count
+mean
+standard deviation
+minimum
+25%
+50%
+75%
+maximum
+```
+
+For example, if we have student marks, `describe()` helps us quickly understand how the marks are distributed.
+
+---
+
+# 8. Selecting Columns
+
+Suppose:
+
+```python
+data = {
+    "Name": ["Ali", "Sara", "Ahmed"],
+    "Age": [20, 21, 19],
+    "Marks": [80, 90, 75]
+}
+
+df = pd.DataFrame(data)
+```
+
+To select only the `Name` column:
+
+```python
+print(df["Name"])
+```
+
+Output:
+
+```
+0      Ali
+1     Sara
+2    Ahmed
+```
+
+To select only Marks:
+
+```python
+print(df["Marks"])
+```
+
+---
+
+## Selecting Multiple Columns
+
+To select Name and Marks:
+
+```python
+print(df[["Name", "Marks"]])
+```
+
+Output:
+
+```
+    Name  Marks
+0    Ali     80
+1   Sara     90
+2  Ahmed     75
+```
+
+Important:
+
+One column:
+
+```python
+df["Name"]
+```
+
+Multiple columns:
+
+```python
+df[["Name", "Marks"]]
+```
+
+---
+
+# 9. Selecting Rows — loc and iloc
+
+Pandas provides `loc` and `iloc` for selecting rows.
+
+## loc
+
+`loc` selects data using **index labels**.
+
+```python
+print(df.loc[0])
+```
+
+Output:
+
+```
+Name     Ali
+Age       20
+Marks     80
+```
+
+To get a specific value:
+
+```python
+print(df.loc[0, "Marks"])
+```
+
+Output:
+
+```
+80
+```
+
+---
+
+## iloc
+
+`iloc` selects data using **positions**.
+
+```python
+print(df.iloc[0])
+```
+
+To get the first row and second column:
+
+```python
+print(df.iloc[0, 1])
+```
+
+Output:
+
+```
+20
+```
+
+The pattern is:
+
+```
+iloc[row_position, column_position]
+```
+
+Important difference:
+
+```
+loc  → Labels / Names
+
+iloc → Integer Positions
+```
+
+---
+
+# 10. Filtering Data
+
+Filtering means getting only the rows that match a condition.
+
+Suppose:
+
+```python
+data = {
+    "Name": ["Ali", "Sara", "Ahmed", "Ayesha"],
+    "Marks": [45, 90, 75, 40]
+}
+
+df = pd.DataFrame(data)
+```
+
+To get students with marks greater than or equal to `50`:
+
+```python
+passed = df[df["Marks"] >= 50]
+
+print(passed)
+```
+
+Output:
+
+```
+    Name  Marks
+1   Sara     90
+2  Ahmed     75
+```
+
+To get failed students:
+
+```python
+failed = df[df["Marks"] < 50]
+
+print(failed)
+```
+
+Output:
+
+```
+     Name  Marks
+0     Ali     45
+3  Ayesha     40
+```
+
+Filtering is one of the most important operations in data analysis.
+
+---
+
+# 11. Adding a New Column
+
+We can add a new column to an existing DataFrame.
+
+Example:
+
+```python
+df["City"] = ["Karachi", "Lahore", "Karachi", "Islamabad"]
+
+print(df)
+```
+
+We can also create a column using calculations.
+
+Example:
+
+```python
+df["Bonus Marks"] = df["Marks"] + 5
+
+print(df)
+```
+
+If marks are:
+
+```
+45
+90
+75
+40
+```
+
+Bonus Marks will become:
+
+```
+50
+95
+80
+45
+```
+
+Pandas performs the operation on the complete column automatically.
+
+---
+
+# 12. Updating Values
+
+We can change existing values inside a DataFrame.
+
+Suppose Ali's marks are `45`.
+
+We want to change them to `55`.
+
+```python
+df.loc[0, "Marks"] = 55
+
+print(df)
+```
+
+Now the value at:
+
+```
+Row 0
+Marks column
+```
+
+will become:
+
+```
+55
+```
+
+We can also update an entire column.
+
+```python
+df["Marks"] = df["Marks"] + 5
+```
+
+This adds `5` to every student's marks.
+
+---
+
+# 13. Deleting Rows and Columns
+
+Pandas uses `drop()` to remove data.
+
+## Delete a Column
+
+```python
+df = df.drop("Age", axis=1)
+```
+
+Here:
+
+```
+axis = 1
+```
+
+means we are deleting a **column**.
+
+---
+
+## Delete a Row
+
+```python
+df = df.drop(0)
+```
+
+This removes the row with index `0`.
+
+Remember:
+
+```
+axis = 0 → Rows
+
+axis = 1 → Columns
+```
+
+---
+
+# 14. Handling Missing Values
+
+Real datasets often contain missing data.
+
+Example:
+
+```python
+data = {
+    "Name": ["Ali", "Sara", "Ahmed"],
+    "Marks": [80, None, 75]
+}
+
+df = pd.DataFrame(data)
+
+print(df)
+```
+
+Output:
+
+```
+    Name  Marks
+0    Ali   80.0
+1   Sara    NaN
+2  Ahmed   75.0
+```
+
+`NaN` means a value is missing.
+
+---
+
+## Check Missing Values
+
+```python
+print(df.isnull())
+```
+
+To count missing values:
+
+```python
+print(df.isnull().sum())
+```
+
+---
+
+## Remove Missing Values
+
+```python
+df = df.dropna()
+```
+
+`dropna()` removes rows containing missing values.
+
+---
+
+## Fill Missing Values
+
+Instead of deleting them:
+
+```python
+df["Marks"] = df["Marks"].fillna(0)
+```
+
+We can also fill missing marks using average marks:
+
+```python
+df["Marks"] = df["Marks"].fillna(df["Marks"].mean())
+```
+
+Missing-value handling is an important part of **data cleaning**.
+
+---
+
+# 15. Handling Duplicate Data
+
+Sometimes the same record appears more than once.
+
+Example:
+
+```python
+data = {
+    "Name": ["Ali", "Sara", "Ali"],
+    "Marks": [80, 90, 80]
+}
+
+df = pd.DataFrame(data)
+```
+
+Check duplicates:
+
+```python
+print(df.duplicated())
+```
+
+Example output:
+
+```
+False
+False
+True
+```
+
+The last row is a duplicate.
+
+To count duplicates:
+
+```python
+print(df.duplicated().sum())
+```
+
+To remove duplicates:
+
+```python
+df = df.drop_duplicates()
+
+print(df)
+```
+
+Duplicate removal is also part of **data cleaning**.
+
+---
+
+# 16. Sorting Data
+
+`sort_values()` arranges data in a particular order.
+
+Example:
+
+```python
+data = {
+    "Name": ["Ali", "Sara", "Ahmed"],
+    "Marks": [70, 95, 80]
+}
+
+df = pd.DataFrame(data)
+```
+
+Sort from lowest to highest:
+
+```python
+print(df.sort_values("Marks"))
+```
+
+Output:
+
+```
+    Name  Marks
+0    Ali     70
+2  Ahmed     80
+1   Sara     95
+```
+
+To sort from highest to lowest:
+
+```python
+print(df.sort_values("Marks", ascending=False))
+```
+
+Output:
+
+```
+    Name  Marks
+1   Sara     95
+2  Ahmed     80
+0    Ali     70
+```
+
+So:
+
+```
+ascending=True  → Smallest to Largest
+
+ascending=False → Largest to Smallest
+```
+
+---
+
+# 17. Aggregation and GroupBy
+
+Aggregation functions give us summary values.
+
+Suppose:
+
+```python
+marks = df["Marks"]
+```
+
+## Sum
+
+```python
+print(marks.sum())
+```
+
+## Average
+
+```python
+print(marks.mean())
+```
+
+## Maximum
+
+```python
+print(marks.max())
+```
+
+## Minimum
+
+```python
+print(marks.min())
+```
+
+## Count
+
+```python
+print(marks.count())
+```
+
+These functions help us summarize numerical data.
+
+---
+
+## groupby()
+
+`groupby()` allows us to analyze data according to categories.
+
+Example:
+
+```python
+data = {
+    "Name": ["Ali", "Sara", "Ahmed", "Ayesha"],
+    "Course": ["AI", "Web", "AI", "Web"],
+    "Marks": [80, 90, 70, 85]
+}
+
+df = pd.DataFrame(data)
+```
+
+Find average marks for each course:
+
+```python
+result = df.groupby("Course")["Marks"].mean()
+
+print(result)
+```
+
+Output:
+
+```
+Course
+AI     75.0
+Web    87.5
+```
+
+It works like:
+
+```
+AI Students
+    ↓
+80, 70
+    ↓
+Average = 75
+
+Web Students
+    ↓
+90, 85
+    ↓
+Average = 87.5
+```
+
+`groupby()` is very important in Data Analysis.
+
+---
+
+# 18. Combining DataFrames
+
+Sometimes our data exists in multiple DataFrames.
+
+Pandas allows us to combine them.
+
+## concat()
+
+Suppose:
+
+```python
+df1 = pd.DataFrame({
+    "Name": ["Ali", "Sara"],
+    "Marks": [80, 90]
+})
+
+df2 = pd.DataFrame({
+    "Name": ["Ahmed", "Ayesha"],
+    "Marks": [75, 85]
+})
+```
+
+Combine them:
+
+```python
+final_df = pd.concat([df1, df2], ignore_index=True)
+
+print(final_df)
+```
+
+Output:
+
+```
+     Name  Marks
+0     Ali     80
+1    Sara     90
+2   Ahmed     75
+3  Ayesha     85
+```
+
+`concat()` is useful when we want to **join similar datasets vertically**.
+
+---
+
+## merge()
+
+`merge()` combines DataFrames using a common column.
+
+Example:
+
+```python
+students = pd.DataFrame({
+    "ID": [1, 2, 3],
+    "Name": ["Ali", "Sara", "Ahmed"]
+})
+
+marks = pd.DataFrame({
+    "ID": [1, 2, 3],
+    "Marks": [80, 90, 75]
+})
+```
+
+Merge using `ID`:
+
+```python
+final_df = pd.merge(students, marks, on="ID")
+
+print(final_df)
+```
+
+Output:
+
+```
+   ID   Name  Marks
+0   1    Ali     80
+1   2   Sara     90
+2   3  Ahmed     75
+```
+
+The common column is:
+
+```
+ID
+```
+
+So:
+
+```
+Students Data
+      +
+Marks Data
+      ↓
+Common ID
+      ↓
+Final DataFrame
+```
+
+---
+
+# Class Practice: Student Performance Analyzer
+
+Now we will use different Pandas concepts in one small program.
+
+## Problem
+
+We have information about different students.
+
+We want to find:
+
+- Average marks
+- Highest marks
+- Lowest marks
+- Passed students
+- Failed students
+- Course-wise average
+- Add a Result column
+
+## Code
+
+```python
+import pandas as pd
+
+data = {
+    "Name": [
+        "Ali",
+        "Sara",
+        "Ahmed",
+        "Ayesha",
+        "Zain"
+    ],
+
+    "Course": [
+        "AI",
+        "Web",
+        "AI",
+        "Web",
+        "AI"
+    ],
+
+    "Marks": [
+        45,
+        90,
+        75,
+        85,
+        40
+    ]
+}
+
+df = pd.DataFrame(data)
+
+print("Student Data:")
+print(df)
+
+print("\nAverage Marks:")
+print(df["Marks"].mean())
+
+print("\nHighest Marks:")
+print(df["Marks"].max())
+
+print("\nLowest Marks:")
+print(df["Marks"].min())
+
+passed = df[df["Marks"] >= 50]
+
+failed = df[df["Marks"] < 50]
+
+print("\nPassed Students:")
+print(passed)
+
+print("\nFailed Students:")
+print(failed)
+
+df["Result"] = df["Marks"].apply(
+    lambda marks: "Pass" if marks >= 50 else "Fail"
+)
+
+print("\nFinal Data:")
+print(df)
+
+print("\nCourse Wise Average:")
+print(df.groupby("Course")["Marks"].mean())
+```
+
+---
+
+# Student Practice Tasks
+
+## Task 1
+
+Create this student DataFrame:
+
+```
+Name     Marks
+Ali       70
+Sara      85
+Ahmed     60
+Ayesha    95
+Zain      45
+```
+
+Find:
+
+- Average marks
+- Maximum marks
+- Minimum marks
+- Total students
+
+---
+
+## Task 2
+
+Using the same DataFrame:
+
+Display only students whose marks are greater than or equal to `50`.
+
+Then display students whose marks are less than `50`.
+
+---
+
+## Task 3
+
+Add a new column:
+
+```
+City
+```
+
+Add different cities for each student.
+
+Then display only students from:
+
+```
+Karachi
+```
+
+---
+
+## Task 4
+
+Create a DataFrame containing:
+
+```
+Name
+Course
+Marks
+```
+
+Use these courses:
+
+```
+AI
+Web
+AI
+Web
+AI
+```
+
+Find the **average marks of each course** using `groupby()`.
+
+---
+
+## Task 5
+
+Create a DataFrame containing some missing marks.
+
+For example:
+
+```
+Ali       80
+Sara      NaN
+Ahmed     70
+Ayesha    NaN
+Zain      90
+```
+
+Find:
+
+- Number of missing values
+- Fill missing values with average marks
+- Display the cleaned DataFrame
+
+---
+
+# Quick Revision
+
+After this topic, you should understand:
+
+- What Pandas is
+- What a DataFrame is
+- How to import Pandas
+- How to create a DataFrame
+- How to read CSV files
+- `head()` and `tail()`
+- `shape`
+- `columns`
+- `dtypes`
+- `info()`
+- `describe()`
+- Selecting columns
+- `loc`
+- `iloc`
+- Filtering
+- Adding columns
+- Updating values
+- `drop()`
+- Missing values
+- Duplicate values
+- Sorting
+- Aggregation functions
+- `groupby()`
+- `concat()`
+- `merge()`
+
+---
+
+# Main Idea
+
+Pandas is not only used to create tables.
+
+It helps us **load, understand, clean, modify and analyze real-world data**.
+
+```
+Raw Data
+   ↓
+Pandas DataFrame
+   ↓
+View & Understand
+   ↓
+Select & Filter
+   ↓
+Clean Data
+   ↓
+Modify Data
+   ↓
+Aggregate & Group
+   ↓
+Data Analysis
+```
+
+These Pandas DataFrame concepts will help us later when we start working with:
+
+```
+Pandas
+   ↓
+Data Cleaning
+   ↓
+EDA
+   ↓
+Data Visualization
+   ↓
+Machine Learning
+```
